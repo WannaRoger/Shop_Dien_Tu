@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\ProductCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ProductCategoriesController extends Controller
 {
@@ -44,13 +45,24 @@ class ProductCategoriesController extends Controller
             'status.required' => 'Trạng thái không được để trống.',
             'status.in' => 'Trạng thái không hợp lệ.',
         ]);
+
     
+
         // Lưu productCategories mới vào cơ sở dữ liệu
         $productCategory = new ProductCategory();
         $productCategory->category_name = $validatedData['category_name'];
         $productCategory->status = $validatedData['status'];
+
+        $productCategory->slug = Str::slug($productCategory->category_name);
+        $productCategory->save();
+
+        // Sau khi save() thì ID mới tồn tại, nên cập nhật lại slug
+        $productCategory->slug = Str::slug($productCategory->category_name) . '-' . $productCategory->id;
+        $productCategory->save();
+
         $productCategory->save();
     
+
         return redirect()->route('productCategories.index')->with('success', 'Danh mục đã được thêm mới thành công.');
     }
 
@@ -58,7 +70,10 @@ class ProductCategoriesController extends Controller
      * Display the specified resource.
      */
     public function show()
+
+    {
     { 
+
         // Logic to display a specific resource can be added here if needed
     }
 
@@ -90,7 +105,9 @@ class ProductCategoriesController extends Controller
             'status.required' => 'Trạng thái không được để trống.',
             'status.in' => 'Trạng thái không hợp lệ.',
         ]);
-    
+
+
+
         // Check if the category name has been changed
         if ($productCategory->category_name !== $validatedData['category_name']) {
             // If the name has been changed, check for uniqueness
@@ -100,12 +117,12 @@ class ProductCategoriesController extends Controller
                 'category_name.unique' => 'Tên danh mục đã tồn tại.',
             ]);
         }
-    
+
         // Update the product category information
         $productCategory->category_name = $validatedData['category_name'];
         $productCategory->status = $validatedData['status'];
         $productCategory->save();
-    
+
         return redirect()->route('productCategories.index')->with('success', 'Cập nhật thành công.');
     }
 
@@ -128,7 +145,7 @@ class ProductCategoriesController extends Controller
         $newStatus = $request->input('status');
         $productCategory->status = $newStatus;
         $productCategory->save();
-    
+
         return response()->json(['status' => $newStatus]);
     }
 }
