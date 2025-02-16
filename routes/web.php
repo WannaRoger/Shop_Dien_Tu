@@ -59,6 +59,25 @@ Route::middleware(['auth', 'authUser:1'])->group(function () {
             Route::post('/bulk-delete', [UsersController::class, 'bulkDelete'])->name('user.bulkDelete');
         });
 
+        Route::prefix('loai-bai-viet')->group(function () {
+            Route::get('/danh-sach', [PostCategoriesController::class, 'index'])->name('postCategory.index');
+            Route::get('/them', [PostCategoriesController::class, 'create'])->name('postCategory.create');
+            Route::post('/them-xu-ly', [PostCategoriesController::class, 'store'])->name('postCategory.store');
+            Route::get('/sua/{id}', [PostCategoriesController::class, 'edit'])->name('postCategory.edit');
+            Route::put('/sua-xu-ly/{id}', [PostCategoriesController::class, 'update'])->name('postCategory.update');
+            Route::delete('/xoa/{id}', [PostCategoriesController::class, 'destroy'])->name('postCategory.destroy');
+        });
+        Route::prefix('bai-viet')->group(function () {
+            Route::get('/danh-sach', [PostsController::class, 'index'])->name('post.index');
+            Route::get('/them', [PostsController::class, 'create'])->name('post.create');
+            Route::post('/them-xu-ly', [PostsController::class, 'store'])->name('post.store');
+            Route::get('/chi-tiet/{id}', [PostsController::class, 'show'])->name('post.show');
+            Route::get('/sua/{id}', [PostsController::class, 'edit'])->name('post.edit');
+            Route::put('/sua-xu-ly/{id}', [PostsController::class, 'update'])->name('post.update');
+            Route::delete('/xoa/{id}', [PostsController::class, 'destroy'])->name('post.destroy');
+            Route::post('/bulk-delete', [PostsController::class, 'bulkDelete'])->name('posts.bulkDelete');
+        });
+
         Route::prefix('danh-muc')->group(function () {
             Route::get('/danh-sach', [ProductCategoriesController::class, 'index'])->name('productCategories.index');
             Route::get('/them', [ProductCategoriesController::class, 'create'])->name('productCategories.create');
