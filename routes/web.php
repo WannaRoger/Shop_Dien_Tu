@@ -6,9 +6,9 @@ use App\Http\Controllers\Clients\GoogleController;
 use App\Http\Controllers\Clients\HomeController as HomeClientController;
 use App\Http\Controllers\Clients\ProductsController as ClientsProductsController;
 use App\Http\Controllers\Admin\ProductCategoriesController;
+use App\Http\Controllers\Clients\CartController;
 
 use App\Http\Controllers\Admin\BannersController;
-use App\Http\Controllers\Admin\ProductCategoriesController;
 use App\Http\Controllers\Admin\AttributesController;
 use App\Http\Controllers\Admin\UsersController;
 
@@ -26,7 +26,10 @@ Route::get('/san-pham', [ClientsProductsController::class, 'index'])->name('prod
 Route::get('/san-pham/{slug?}', [ClientsProductsController::class, 'productByCategory'])->name('productsClient.productByCategory');
 Route::get('/san-pham/{id}/chi-tiet', [ClientsProductsController::class, 'show'])->name('productsClient.show');
     // giỏ hàng
-
+    Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+    Route::get('/gio-hang', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
+    Route::delete('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
      // Thanh toán
 
     // voucher
