@@ -7,6 +7,9 @@ use App\Http\Controllers\Clients\HomeController as HomeClientController;
 use App\Http\Controllers\Clients\ProductsController as ClientsProductsController;
 use App\Http\Controllers\Admin\ProductCategoriesController;
 use App\Http\Controllers\Clients\CartController;
+use App\Http\Controllers\Clients\CheckoutController;
+use App\Http\Controllers\Clients\PaymentController;
+use App\Http\Controllers\Clients\OrdersContrller;
 
 use App\Http\Controllers\Admin\BannersController;
 use App\Http\Controllers\Admin\AttributesController;
@@ -31,7 +34,11 @@ Route::get('/san-pham/{id}/chi-tiet', [ClientsProductsController::class, 'show']
     Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
     Route::delete('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
      // Thanh toán
-
+     Route::get('/thanh-toan', [CheckoutController::class, 'index'])->name('checkout.index');
+     Route::post('/xu-ly-thanh-toan', [PaymentController::class, 'processOrder'])->name('checkout.process');
+     Route::get('/vnpay-return', [PaymentController::class, 'vnpayReturn'])->name('vnpayReturn');
+     Route::get('/vnpay_payment', [PaymentController::class, 'vnpay_payment'])->name('vnpay_payment');
+     Route::get('/don-hang/{id}',  [OrdersContrller::class, 'show'])->name('orderReceived');
     // voucher
 
     // Đơn hàng
