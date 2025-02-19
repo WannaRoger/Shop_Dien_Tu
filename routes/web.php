@@ -6,7 +6,14 @@ use App\Http\Controllers\Clients\GoogleController;
 use App\Http\Controllers\Clients\HomeController as HomeClientController;
 use App\Http\Controllers\Clients\ProductsController as ClientsProductsController;
 use App\Http\Controllers\Admin\ProductCategoriesController;
+use App\Http\Controllers\Clients\CartController;
+use App\Http\Controllers\Clients\CheckoutController;
+use App\Http\Controllers\Clients\PaymentController;
+use App\Http\Controllers\Clients\OrdersContrller;
 
+use App\Http\Controllers\Admin\BannersController;
+use App\Http\Controllers\Admin\AttributesController;
+use App\Http\Controllers\Admin\UsersController;
 
 
 Route::get('/dang-nhap', [AuthClientController::class, 'showLoginForm'])->name('login');
@@ -22,9 +29,16 @@ Route::get('/san-pham', [ClientsProductsController::class, 'index'])->name('prod
 Route::get('/san-pham/{slug?}', [ClientsProductsController::class, 'productByCategory'])->name('productsClient.productByCategory');
 Route::get('/san-pham/{id}/chi-tiet', [ClientsProductsController::class, 'show'])->name('productsClient.show');
     // giỏ hàng
-
+    Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+    Route::get('/gio-hang', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
+    Route::delete('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
      // Thanh toán
-
+     Route::get('/thanh-toan', [CheckoutController::class, 'index'])->name('checkout.index');
+     Route::post('/xu-ly-thanh-toan', [PaymentController::class, 'processOrder'])->name('checkout.process');
+     Route::get('/vnpay-return', [PaymentController::class, 'vnpayReturn'])->name('vnpayReturn');
+     Route::get('/vnpay_payment', [PaymentController::class, 'vnpay_payment'])->name('vnpay_payment');
+     Route::get('/don-hang/{id}',  [OrdersContrller::class, 'show'])->name('orderReceived');
     // voucher
 
     // Đơn hàng
@@ -38,6 +52,73 @@ Route::get('/admin/dang-ky', [AuthAdminController::class, 'showRegistrationForm'
 Route::post('/admin/xu-ly-dang-ky', [AuthAdminController::class, 'register'])->name('registerAdmin.store');
 Route::get('/admin/dang-xuat', [AuthAdminController::class, 'logout'])->name('logoutAdmin')->middleware('auth');
 // authUser:1 => admin
+Route::middleware(['auth', 'authUser:1'])->group(function () {
+    Route::prefix('admin')->group(function () {
+        Route::get('/', [HomeController::class, 'index'])->name('admin.home.index');
+        Route::get('/test', [HomeController::class, 'test'])->name('admin.home.test');
+        Route::prefix('banners')->group(function () {
+            Route::get('/danh-sach', [BannersController::class, 'index'])->name('banner.index');
+            Route::get('/them', [BannersController::class, 'create'])->name('banner.create');
+            Route::post('/them-xu-ly', [BannersController::class, 'store'])->name('banner.store');
+            Route::get('/sua/{id}', [BannersController::class, 'edit'])->name('banner.edit');
+            Route::put('/banner/{id}', [BannersController::class, 'update'])->name('banner.update');
+            Route::put('/toggleBannerStatus/{id}', [BannersController::class, 'toggleBannerStatus'])->name('banner.updateStatus');
+            Route::delete('/xoa/{id}', [BannersController::class, 'destroy'])->name('banner.destroy');
+        });
+
+
+        Route::prefix('tai-khoan')->group(function () {
+            Route::get('/danh-sach', [UsersController::class, 'index'])->name('user.index');
+            Route::get('/them', [UsersController::class, 'create'])->name('user.create');
+            Route::post('/them-xu-ly', [UsersController::class, 'store'])->name('user.store');
+            Route::get('/chi-tiet/{id}', [UsersController::class, 'show'])->name('user.show');
+            Route::get('/sua/{id}', [UsersController::class, 'edit'])->name('user.edit');
+            Route::put('/sua-xu-ly/{id}', [UsersController::class, 'update'])->name('user.update');
+            Route::delete('/xoa/{id}', [UsersController::class, 'destroy'])->name('user.destroy');
+            Route::post('/bulk-delete', [UsersController::class, 'bulkDelete'])->name('user.bulkDelete');
+        });
+
+        Route::prefix('loai-bai-viet')->group(function () {
+            Route::get('/danh-sach', [PostCategoriesController::class, 'index'])->name('postCategory.index');
+            Route::get('/them', [PostCategoriesController::class, 'create'])->name('postCategory.create');
+            Route::post('/them-xu-ly', [PostCategoriesController::class, 'store'])->name('postCategory.store');
+            Route::get('/sua/{id}', [PostCategoriesController::class, 'edit'])->name('postCategory.edit');
+            Route::put('/sua-xu-ly/{id}', [PostCategoriesController::class, 'update'])->name('postCategory.update');
+            Route::delete('/xoa/{id}', [PostCategoriesController::class, 'destroy'])->name('postCategory.destroy');
+        });
+        Route::prefix('bai-viet')->group(function () {
+            Route::get('/danh-sach', [PostsController::class, 'index'])->name('post.index');
+            Route::get('/them', [PostsController::class, 'create'])->name('post.create');
+            Route::post('/them-xu-ly', [PostsController::class, 'store'])->name('post.store');
+            Route::get('/chi-tiet/{id}', [PostsController::class, 'show'])->name('post.show');
+            Route::get('/sua/{id}', [PostsController::class, 'edit'])->name('post.edit');
+            Route::put('/sua-xu-ly/{id}', [PostsController::class, 'update'])->name('post.update');
+            Route::delete('/xoa/{id}', [PostsController::class, 'destroy'])->name('post.destroy');
+            Route::post('/bulk-delete', [PostsController::class, 'bulkDelete'])->name('posts.bulkDelete');
+        });
+
+        Route::prefix('danh-muc')->group(function () {
+            Route::get('/danh-sach', [ProductCategoriesController::class, 'index'])->name('productCategories.index');
+            Route::get('/them', [ProductCategoriesController::class, 'create'])->name('productCategories.create');
+            Route::post('/them-xu-ly', [ProductCategoriesController::class, 'store'])->name('productCategories.store');
+            Route::get('/sua/{id}', [ProductCategoriesController::class, 'edit'])->name('productCategories.edit');
+            Route::put('/sua-xu-ly/{id}', [ProductCategoriesController::class, 'update'])->name('productCategories.update');
+            Route::delete('/xoa/{id}', [ProductCategoriesController::class, 'destroy'])->name('productCategories.destroy');
+            Route::put('/sua-trang-thai/{id}', [ProductCategoriesController::class, 'updateStatus'])->name('productCategories.updateStatus');
+        });
+
+        Route::prefix('thuoc-tinh')->group(function () {
+            Route::get('/danh-sach', [AttributesController::class, 'index'])->name('attributes.index');
+            Route::get('/them', [AttributesController::class, 'create'])->name('attributes.create');
+            Route::post('/them-xu-ly', [AttributesController::class, 'store'])->name('attributes.store');
+            Route::get('/chi-tiet/{id}', [AttributesController::class, 'show'])->name('attributes.show');
+            Route::get('/sua/{id}', [AttributesController::class, 'edit'])->name('attributes.edit');
+            Route::put('/sua-xu-ly/{id}', [AttributesController::class, 'update'])->name('attributes.update');
+            Route::delete('/xoa/{id}', [AttributesController::class, 'destroy'])->name('attributes.destroy');
+            Route::put('/sua-trang-thai/{id}', [ProductCategoriesController::class, 'updateStatus'])->name('attributes.updateStatus');
+        });
+    });
+});
 Route::prefix('danh-muc')->group(function () {
     Route::get('/danh-sach', [ProductCategoriesController::class, 'index'])->name('productCategories.index');
     Route::get('/them', [ProductCategoriesController::class, 'create'])->name('productCategories.create');
@@ -58,3 +139,4 @@ Route::prefix('san-pham')->group(function () {
     Route::delete('/xoa/{id}', [ProductsController::class, 'destroy'])->name('product.destroy');
     Route::post('/bulk-delete', [ProductsController::class, 'bulkDelete'])->name('products.bulkDelete');
 });
+
