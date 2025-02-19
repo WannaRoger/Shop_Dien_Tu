@@ -47,3 +47,14 @@ Route::prefix('danh-muc')->group(function () {
     Route::delete('/xoa/{id}', [ProductCategoriesController::class, 'destroy'])->name('productCategories.destroy');
     Route::put('/sua-trang-thai/{id}', [ProductCategoriesController::class, 'updateStatus'])->name('productCategories.updateStatus');
 });
+Route::prefix('san-pham')->group(function () {
+    Route::get('/', [ProductsController::class, 'index'])->name('products.index');
+    Route::get('/them', [ProductsController::class, 'create'])->name('product.create');
+    Route::get('/test', [ProductsController::class, 'test'])->name('product.test');
+    Route::post('/them-xu-ly', [ProductsController::class, 'store'])->name('products.store');
+    Route::get('/chi-tiet/{id}', [ProductsController::class, 'show'])->name('product.show');
+    Route::get('/sua/{id}', [ProductsController::class, 'edit'])->name('product.edit');
+    Route::put('/sua-xu-ly/{id}', [ProductsController::class, 'update'])->name('products.update');
+    Route::delete('/xoa/{id}', [ProductsController::class, 'destroy'])->name('product.destroy');
+    Route::post('/bulk-delete', [ProductsController::class, 'bulkDelete'])->name('products.bulkDelete');
+});
