@@ -47,6 +47,14 @@ Route::middleware(['auth', 'authUser:1'])->group(function () {
             Route::delete('/xoa/{id}', [BannersController::class, 'destroy'])->name('banner.destroy');
         });
 
+        Route::prefix('menu')->group(function () {
+            Route::get('/danh-sach', [MenuController::class, 'index'])->name('menu.index');
+            Route::get('/them', [MenuController::class, 'create'])->name('menu.create');
+            Route::post('/them-xu-ly', [MenuController::class, 'store'])->name('menu.store');
+            Route::get('/sua/{id}', [MenuController::class, 'edit'])->name('menu.edit');
+            Route::put('/sua-xu-ly/{id}', [MenuController::class, 'update'])->name('menu.update');
+            Route::delete('/xoa/{id}', [MenuController::class, 'destroy'])->name('menu.destroy');
+        });
 
         Route::prefix('tai-khoan')->group(function () {
             Route::get('/danh-sach', [UsersController::class, 'index'])->name('user.index');
@@ -97,6 +105,21 @@ Route::middleware(['auth', 'authUser:1'])->group(function () {
             Route::put('/sua-xu-ly/{id}', [AttributesController::class, 'update'])->name('attributes.update');
             Route::delete('/xoa/{id}', [AttributesController::class, 'destroy'])->name('attributes.destroy');
             Route::put('/sua-trang-thai/{id}', [ProductCategoriesController::class, 'updateStatus'])->name('attributes.updateStatus');
+        });
+
+        Route::prefix('hoa-don')->group(function () {
+            Route::get('/', [AdminOrderController::class, 'index'])->name('admin.orders.index');
+            Route::get('/{id}', [AdminOrderController::class, 'show'])->name('admin.orders.show');
+            Route::put('/{order}/update-status', [AdminOrderController::class, 'updateStatus'])->name('admin.orders.updateStatus');
+        });
+
+        Route::prefix('giam-gia')->group(function () {
+            Route::get('/', [DiscountController::class, 'index'])->name('discounts.index');
+            Route::get('/create', [DiscountController::class, 'create'])->name('discounts.create');
+            Route::post('/store', [DiscountController::class, 'store'])->name('discounts.store');
+            Route::get('/{discount}/edit', [DiscountController::class, 'edit'])->name('discounts.edit');
+            Route::put('/{discount}', [DiscountController::class, 'update'])->name('discounts.update');
+            Route::post('/bulk-delete', [DiscountController::class, 'bulkDelete'])->name('discounts.bulkDelete');
         });
     });
 });
