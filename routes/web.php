@@ -1,16 +1,20 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AuthController as AuthAdminController;
 use App\Http\Controllers\Clients\AuthController as AuthClientController;
 use App\Http\Controllers\Clients\GoogleController;
 use App\Http\Controllers\Clients\HomeController as HomeClientController;
 use App\Http\Controllers\Clients\ProductsController as ClientsProductsController;
+use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\ProductCategoriesController;
-
 use App\Http\Controllers\Admin\BannersController;
-use App\Http\Controllers\Admin\ProductCategoriesController;
 use App\Http\Controllers\Admin\AttributesController;
 use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\Admin\PostsController;
+use App\Http\Controllers\Admin\PostCategoriesController;
+use App\Http\Controllers\Admin\ProductsController as AdminProductsController;
+
 
 
 Route::get('/dang-nhap', [AuthClientController::class, 'showLoginForm'])->name('login');
@@ -25,16 +29,16 @@ Route::get('/', [HomeClientController::class, 'index'])->name('home.index');
 Route::get('/san-pham', [ClientsProductsController::class, 'index'])->name('productsClient.index');
 Route::get('/san-pham/{slug?}', [ClientsProductsController::class, 'productByCategory'])->name('productsClient.productByCategory');
 Route::get('/san-pham/{id}/chi-tiet', [ClientsProductsController::class, 'show'])->name('productsClient.show');
-    // giỏ hàng
+// giỏ hàng
 
-     // Thanh toán
+// Thanh toán
 
-    // voucher
+// voucher
 
-    // Đơn hàng
+// Đơn hàng
 
-    //Tài khoản
-    
+//Tài khoản
+
 // Admin
 Route::get('/admin/dang-nhap', [AuthAdminController::class, 'showLoginForm'])->name('loginAdmin');
 Route::post('/admin/xu-ly-dang-nhap', [AuthAdminController::class, 'login'])->name('loginAdmin.store');

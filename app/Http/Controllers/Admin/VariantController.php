@@ -1,18 +1,20 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class VariantController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return view('pages.admin.variant.index', [
+            'title' => 'Danh sách sản phẩm'
+        ]);
     }
 
     /**
@@ -20,7 +22,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.admin.variant.add', [
+            'title' => 'Thêm sản phẩm'
+        ]);
     }
 
     /**
@@ -34,9 +38,12 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
+    public function show()
+    { {
+            return view('pages.admin.variant.detail', [
+                'title' => 'Danh sách sản phẩm'
+            ]);
+        }
     }
 
     /**
@@ -44,7 +51,7 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return view('pages.admin.variant.edit');
     }
 
     /**
