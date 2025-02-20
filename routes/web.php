@@ -10,6 +10,13 @@ use App\Http\Controllers\Admin\PostCategoriesController;
 use App\Http\Controllers\Admin\PostsController;
 use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\Admin\ProductCategoriesController;
+use App\Http\Controllers\Clients\ProductsController as ClientsProductsController;
+use App\Http\Controllers\Admin\ProductCategoriesController;
+use App\Http\Controllers\Clients\CartController;
+use App\Http\Controllers\Clients\CheckoutController;
+use App\Http\Controllers\Clients\PaymentController;
+use App\Http\Controllers\Clients\OrdersContrller;
+use App\Http\Controllers\Admin\BannersController;
 use App\Http\Controllers\Admin\AttributesController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
@@ -30,9 +37,16 @@ Route::get('/san-pham', [ClientsProductsController::class, 'index'])->name('prod
 Route::get('/san-pham/{slug?}', [ClientsProductsController::class, 'productByCategory'])->name('productsClient.productByCategory');
 Route::get('/san-pham/{id}/chi-tiet', [ClientsProductsController::class, 'show'])->name('productsClient.show');
     // giỏ hàng
-
+    Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+    Route::get('/gio-hang', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
+    Route::delete('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
      // Thanh toán
-
+     Route::get('/thanh-toan', [CheckoutController::class, 'index'])->name('checkout.index');
+     Route::post('/xu-ly-thanh-toan', [PaymentController::class, 'processOrder'])->name('checkout.process');
+     Route::get('/vnpay-return', [PaymentController::class, 'vnpayReturn'])->name('vnpayReturn');
+     Route::get('/vnpay_payment', [PaymentController::class, 'vnpay_payment'])->name('vnpay_payment');
+     Route::get('/don-hang/{id}',  [OrdersContrller::class, 'show'])->name('orderReceived');
     // voucher
 
     // Đơn hàng
