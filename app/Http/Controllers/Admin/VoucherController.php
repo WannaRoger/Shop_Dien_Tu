@@ -83,10 +83,10 @@ class VoucherController extends Controller
             'max_discount_amount.required' => 'Giảm tối đa không được bỏ trống.',
             'max_discount_amount.numeric' => 'Giảm tối đa phải là một số.',
         ]);
-    
+
         $voucher = Voucher::findOrFail($id);
         $voucher->update($request->all());
-    
+
         return redirect()->route('vouchers.index')->with('success', 'Cập nhật thành công.');
     }
 

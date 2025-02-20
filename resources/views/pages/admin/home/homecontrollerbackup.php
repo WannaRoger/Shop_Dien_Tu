@@ -15,7 +15,7 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $title = "Báo cáo Doanh Thu | Admin KhanhUD Mobile";
+        $title = "Báo cáo Doanh Thu";
         $filterBy = $request->query('filter_by', 'day');
         $startDate = $request->query('start_date', Carbon::now()->startOfDay()->toDateString());
         $endDate = $request->query('end_date', Carbon::now()->endOfDay()->toDateString());
