@@ -46,22 +46,16 @@ class ProductCategoriesController extends Controller
             'status.in' => 'Trạng thái không hợp lệ.',
         ]);
 
-    
-
         // Lưu productCategories mới vào cơ sở dữ liệu
         $productCategory = new ProductCategory();
         $productCategory->category_name = $validatedData['category_name'];
         $productCategory->status = $validatedData['status'];
-
         $productCategory->slug = Str::slug($productCategory->category_name);
         $productCategory->save();
 
         // Sau khi save() thì ID mới tồn tại, nên cập nhật lại slug
         $productCategory->slug = Str::slug($productCategory->category_name) . '-' . $productCategory->id;
         $productCategory->save();
-
-        $productCategory->save();
-    
 
         return redirect()->route('productCategories.index')->with('success', 'Danh mục đã được thêm mới thành công.');
     }
@@ -70,10 +64,7 @@ class ProductCategoriesController extends Controller
      * Display the specified resource.
      */
     public function show()
-
     {
-    { 
-
         // Logic to display a specific resource can be added here if needed
     }
 
@@ -105,8 +96,6 @@ class ProductCategoriesController extends Controller
             'status.required' => 'Trạng thái không được để trống.',
             'status.in' => 'Trạng thái không hợp lệ.',
         ]);
-
-
 
         // Check if the category name has been changed
         if ($productCategory->category_name !== $validatedData['category_name']) {

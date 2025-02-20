@@ -2,15 +2,19 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AuthController as AuthAdminController;
 use App\Http\Controllers\Clients\AuthController as AuthClientController;
-use App\Http\Controllers\Clients\GoogleController;
+use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Clients\HomeController as HomeClientController;
-use App\Http\Controllers\Clients\ProductsController as ClientsProductsController;
-use App\Http\Controllers\Admin\ProductCategoriesController;
-
 use App\Http\Controllers\Admin\BannersController;
+use App\Http\Controllers\Admin\MenuController;
+use App\Http\Controllers\Admin\PostCategoriesController;
+use App\Http\Controllers\Admin\PostsController;
+use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\Admin\ProductCategoriesController;
 use App\Http\Controllers\Admin\AttributesController;
 use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
+use App\Http\Controllers\Admin\VoucherController;
+use App\Http\Controllers\Admin\DiscountController;
 
 
 Route::get('/dang-nhap', [AuthClientController::class, 'showLoginForm'])->name('login');
@@ -34,7 +38,7 @@ Route::get('/san-pham/{id}/chi-tiet', [ClientsProductsController::class, 'show']
     // Đơn hàng
 
     //Tài khoản
-    
+
 // Admin
 Route::get('/admin/dang-nhap', [AuthAdminController::class, 'showLoginForm'])->name('loginAdmin');
 Route::post('/admin/xu-ly-dang-nhap', [AuthAdminController::class, 'login'])->name('loginAdmin.store');
@@ -122,6 +126,15 @@ Route::middleware(['auth', 'authUser:1'])->group(function () {
             Route::put('/{order}/update-status', [AdminOrderController::class, 'updateStatus'])->name('admin.orders.updateStatus');
         });
 
+        Route::prefix('voucher')->group(function () {
+            Route::get('/', [VoucherController::class, 'index'])->name('vouchers.index');
+            Route::get('/create', [VoucherController::class, 'create'])->name('vouchers.create');
+            Route::post('vouchers', [VoucherController::class, 'store'])->name('vouchers.store');
+            Route::get('/{voucher}/edit', [VoucherController::class, 'edit'])->name('vouchers.edit');
+            Route::put('/{voucher}', [VoucherController::class, 'update'])->name('vouchers.update');
+            Route::delete('/{voucher}', [VoucherController::class, 'destroy'])->name('vouchers.destroy');
+        });
+
         Route::prefix('giam-gia')->group(function () {
             Route::get('/', [DiscountController::class, 'index'])->name('discounts.index');
             Route::get('/create', [DiscountController::class, 'create'])->name('discounts.create');
@@ -132,12 +145,4 @@ Route::middleware(['auth', 'authUser:1'])->group(function () {
         });
     });
 });
-Route::prefix('danh-muc')->group(function () {
-    Route::get('/danh-sach', [ProductCategoriesController::class, 'index'])->name('productCategories.index');
-    Route::get('/them', [ProductCategoriesController::class, 'create'])->name('productCategories.create');
-    Route::post('/them-xu-ly', [ProductCategoriesController::class, 'store'])->name('productCategories.store');
-    Route::get('/sua/{id}', [ProductCategoriesController::class, 'edit'])->name('productCategories.edit');
-    Route::put('/sua-xu-ly/{id}', [ProductCategoriesController::class, 'update'])->name('productCategories.update');
-    Route::delete('/xoa/{id}', [ProductCategoriesController::class, 'destroy'])->name('productCategories.destroy');
-    Route::put('/sua-trang-thai/{id}', [ProductCategoriesController::class, 'updateStatus'])->name('productCategories.updateStatus');
-});
+
