@@ -200,7 +200,7 @@
                                 </div>
                             </div>
                         </div>
-                       <div class="row">
+                        <div class="row">
                             <div class="card p-0">
                                 <h6 class="card-header title">Bài viết mới nhất</h6>
                                 <div class="product-widget mb-3">
@@ -286,7 +286,10 @@
                                 <div class=" col-1 avatar">H</div>
                                 <div class=" p-1 ms-3">
                                     <div class="username">Hoang</div>
-                                    <p class="mt-1 mb-0">@Vỹ trả góp qua cty tài Chính nào và trả trước bao nhiêu % vậy ta</p>
+                                    <p class="mt-1 mb-0"><strong>@Vỹ trả góp</strong>qua cty tài Chính nào và trả trước bao
+                                        nhiêu %
+                                        vậy ta
+                                    </p>
                                     <div class="date">5 ngày trước</div>
                                 </div>
                             </div>
