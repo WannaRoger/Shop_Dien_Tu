@@ -34,9 +34,8 @@
                         </div>
                     </div>
                     <div class="me-3">
-                        <a href="{{ route('user.index') }}"><button type="button"
-                                class="btn btn-primary text-capitalize ">
-                                Danh sách 
+                        <a href="{{ route('user.index') }}"><button type="button" class="btn btn-primary text-capitalize ">
+                                Danh sách
                             </button>
                         </a>
                     </div>
@@ -55,7 +54,7 @@
                             </div>
                             <div class="card-body p-3">
                                 <p class="text-sm">
-                                    Xin chào, tôi là Khanh, Quyết định: Nếu bạn không thể quyết định thì câu trả lời là
+                                    Xin chào, tôi là Kiet, Quyết định: Nếu bạn không thể quyết định thì câu trả lời là
                                     không.
                                     Nếu hai con đường khó khăn như nhau,
                                     hãy chọn con đường đau đớn hơn trong thời gian ngắn (né tránh nỗi đau là tạo ra ảo tưởng
@@ -69,7 +68,7 @@
                                     <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Số điện
                                             thoại:</strong> &nbsp; Chưa mở rộng</li>
                                     <li class="list-group-item border-0 ps-0 text-sm"><strong
-                                            class="text-dark">Email:</strong> &nbsp; Khanh@gmail.com</li>
+                                            class="text-dark">Email:</strong> &nbsp; Kiet@gmail.com</li>
                                     <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Địa
                                             chỉ:</strong> &nbsp; Chưa mở rộng </li>
                                     <li class="list-group-item border-0 ps-0 pb-0">

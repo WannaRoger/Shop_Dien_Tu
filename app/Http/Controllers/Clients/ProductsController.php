@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Clients;
 
 use App\Http\Controllers\Controller;
@@ -34,7 +35,7 @@ class ProductsController extends Controller
 
     public function productByCategory($slug = null)
     {
-        $title = 'Sản phẩm | KhanhUD Mobile';
+        $title = 'Sản phẩm ';
         $categories = ProductCategory::all();
         $mostViewedProducts = Product::where('status', 1)->orderBy('is_most_viewed', 'desc')->take(5)->get();
 
@@ -94,7 +95,7 @@ class ProductsController extends Controller
             ->where('start_date', '<=', now())
             ->where('end_date', '>=', now())
             ->first();
-    
+
         if ($product->has_variants) {
             $prices = $product->variants->map(function ($variant) use ($discount) {
                 $original_price = $variant->price;
@@ -110,7 +111,7 @@ class ProductsController extends Controller
                 $variant->discounted_price = $discounted_price;
                 return $discounted_price;
             })->toArray();
-    
+
             if (count($prices) == 1) {
                 $product->price_range = number_format($prices[0], 0, ',', '.') . '₫';
             } elseif (count($prices) > 1) {

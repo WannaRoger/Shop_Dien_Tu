@@ -1,5 +1,6 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AuthController as AuthAdminController;
 use App\Http\Controllers\Clients\AuthController as AuthClientController;

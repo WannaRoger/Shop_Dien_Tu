@@ -11,7 +11,7 @@ class OrderController extends Controller
 {
     public function index(Request $request)
     {
-        $title = 'Hóa đơn | Admin KhanhUD Mobile';
+        $title = 'Hóa đơn';
         $search = $request->input('search');
         $status = $request->input('status');
         $orders = Order::query()

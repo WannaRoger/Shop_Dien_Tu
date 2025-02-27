@@ -53,7 +53,7 @@ class HomeController extends Controller
         $banners = Banner::where('status', 1)->get();
 
         return view('pages.client.home', [
-            'title' => 'Khanh Mobile | Điện Thoại Cần Thơ',
+            'title' => ' Điện Thoại Hà Nam',
             'banners' => $banners,
             'breadcrumbs' => $breadcrumbs,
             'newProducts' => $newProducts,
@@ -72,25 +72,25 @@ class HomeController extends Controller
             ->where('start_date', '<=', now())
             ->where('end_date', '>=', now())
             ->first();
-    
+
         $product->discount_percentage = '';
-    
+
         if ($product->has_variants) {
             $prices = $product->variants->map(function ($variant) use ($discount, &$product) {
                 $original_price = $variant->price;
                 $discounted_price = $original_price;
-    
+
                 if ($discount) {
                     if ($discount->discount_percentage) {
                         $discounted_price = $original_price * (1 - $discount->discount_percentage / 100);
                         $product->discount_percentage = $discount->discount_percentage;
-                    } 
+                    }
                 }
-    
+
                 $variant->discounted_price = $discounted_price;
                 return $discounted_price;
             })->toArray();
-    
+
             if (count($prices) == 1) {
                 $product->price_range = number_format($prices[0], 0, ',', '.') . '₫';
             } elseif (count($prices) > 1) {
@@ -100,7 +100,7 @@ class HomeController extends Controller
         } else {
             $original_price = $product->base_price;
             $discounted_price = $original_price;
-    
+
             if ($discount) {
                 if ($discount->discount_percentage) {
                     $discounted_price = $original_price * (1 - $discount->discount_percentage / 100);
@@ -108,10 +108,9 @@ class HomeController extends Controller
                 }
                 $product->old_price = $original_price;
             }
-    
+
             $product->price_range = number_format($discounted_price, 0, ',', '.') . '₫';
             $product->total_stock = $product->store_quantity;
         }
     }
-    
 }

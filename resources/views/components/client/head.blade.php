@@ -4,7 +4,6 @@
     <title>{{ $title }}</title>
     <meta name="description" content="{{ $meta_description ?? 'Default meta description' }}">
     <meta name="keywords" content="{{ $meta_keywords ?? 'default, keywords' }}">
-    <meta name="author" content="Nguyen Quoc Khanh">
     <meta property="og:title" content="{{ $title }}">
     <meta property="og:description" content="{{ $meta_description ?? 'Default meta description' }}">
     <meta property="og:image" content="{{ $og_image ?? asset('default-og-image.jpg') }}">

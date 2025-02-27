@@ -79,7 +79,7 @@
                                                             <button type="button"
                                                                 onclick="confirmDelete({{ $postCategory->id }})"
                                                                 class="btn btn-danger text-capitalize text-xs mb-0">
-                                                                Xóa {{ $postCategory->id }}
+                                                                Xóa
                                                             </button>
                                                         </form>
                                                     </div>

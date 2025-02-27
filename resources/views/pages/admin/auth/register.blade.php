@@ -16,7 +16,7 @@
                             <div class="card-header bg-gradient-dark ">
                                 <div class="text-center">
                                     <h4 class="font-weight-bolder p-3 mb-0">
-                                        <span class="text-white">Khanh</span><span style="color: #D10024;">Mobile</span>
+                                        <span class="text-white">FPT</span><span style="color: #D10024;">Shop</span>
                                     </h4>
                                 </div>
                             </div>
